@@ -33,3 +33,10 @@ app.get('/users', user.list);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+//Extras
+
+//Method to give us the month name, from http://www.hunlock.com/blogs/Javascript_Dates-The_Complete_Reference#quickIDX8
+Date.prototype.getMonthName = function() {
+   return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.getMonth()]; 
+}

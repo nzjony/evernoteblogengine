@@ -21,8 +21,9 @@ function buildNoteClientForUser(user) {
  * GET home page.
  */
 
+var blogContent = [];
+
 exports.index = function(req, res){
-	var blogContent = [];
 	var currentBlog = 0;
 
 	// for(var i = 0; i < 5; i++) {
@@ -33,56 +34,62 @@ exports.index = function(req, res){
 	userClient.getPublicUserInfo("jonotkd", function(err, response) {
 		var noteClient = buildNoteClientForUser(response);
 		var webApiUrlPrefix = response.webApiUrlPrefix;
-		
-		//Pull out my public notebook
-		noteClient.getPublicNotebook(response.userId, "jonathanstichburysnotebook", function(err, response) {			
-			//Setup a filter to get the notes from the public notebook
-			var noteFilter = new NoteTypes.NoteFilter();
-			noteFilter.notebookGuid = response.guid;
-			
-			var resultSpec = new NotesMetadataResultSpec();
-			var listPublicNotes = noteClient.findNotesMetadata("", noteFilter, 0, 10, resultSpec, function(err, response) {
-				if(err) {
-					console.error("Error: " + err);
-				}
-				else {
-					console.log("Found " + response.totalNotes + " notes");
-				}
-				
-				var totalNotes = response.totalNotes;
-				var notesProcessed = 0;	
-				for(var i = 0; i < totalNotes; i++) {
-					var currentNote = response.notes[i];
-					var note = noteClient.getNote("", currentNote.guid, true, false, false, false, function(err, response) {
-						if(err) {
-							console.log("Error: " + err);
-							return;
-						}
-						notesProcessed++;
-						var resources = {};
-						for(var resIndex in response.resources) {
-							var resource = response.resources[resIndex];
-							resources[resource.data.bodyHash] = webApiUrlPrefix + 'res/' + resource.guid;
-						}
-						
-						var content = enml.HTMLOfENML(response.content, resources);
-						blogContent.push({
-							title: response.title,
-							content: content,
-							created: response.created
-						});
 
-						//Maybe there is a better way of doing this?
-						if(notesProcessed == totalNotes) {
-							console.log("Rendering");
-							res.render('index', {title: 'Hello', items: blogContent.sort(function(a, b){
-								//Sort notes in descending order
-								return b.created - a.created;
-							})});
-						}
-					});
-				}
+		if(blogContent.length == 0) {		
+			//Pull out my public notebook
+			noteClient.getPublicNotebook(response.userId, "jonathanstichburysnotebook", function(err, response) {			
+				//Setup a filter to get the notes from the public notebook
+				var noteFilter = new NoteTypes.NoteFilter();
+				noteFilter.notebookGuid = response.guid;
+				
+				var resultSpec = new NotesMetadataResultSpec();
+				var listPublicNotes = noteClient.findNotesMetadata("", noteFilter, 0, 10, resultSpec, function(err, response) {
+					if(err) {
+						console.error("Error: " + err);
+					}
+					else {
+						console.log("Found " + response.totalNotes + " notes");
+					}
+					
+					var totalNotes = response.totalNotes;
+					var notesProcessed = 0;	
+					for(var i = 0; i < totalNotes; i++) {
+						var currentNote = response.notes[i];
+						var note = noteClient.getNote("", currentNote.guid, true, false, false, false, function(err, response) {
+							if(err) {
+								console.log("Error: " + err);
+								return;
+							}
+							notesProcessed++;
+							var resources = {};
+							for(var resIndex in response.resources) {
+								var resource = response.resources[resIndex];
+								resources[resource.data.bodyHash] = webApiUrlPrefix + 'res/' + resource.guid;
+							}
+							
+							var content = enml.HTMLOfENML(response.content, resources);
+							blogContent.push({
+								title: response.title,
+								content: content,
+								created: response.created
+							});
+
+							//Maybe there is a better way of doing this?
+							if(notesProcessed == totalNotes) {
+								console.log("Rendering");
+								res.render('index', {title: 'Hello', items: blogContent.sort(function(a, b){
+									//Sort notes in descending order
+									return b.created - a.created;
+								})});
+							}
+						});
+					}
+				})
 			})
-		})
+		} else {
+			res.render('index', {title: 'Hello', items: blogContent.sort(function(a, b) {
+				return b.created - a.created;
+			})});
+		}
 	})
 };

@@ -33,7 +33,6 @@ exports.index = function(req, res){
 	userClient.getPublicUserInfo("jonotkd", function(err, response) {
 		var noteClient = buildNoteClientForUser(response);
 		var webApiUrlPrefix = response.webApiUrlPrefix;
-		console.log(webApiUrlPrefix);
 		
 		//Pull out my public notebook
 		noteClient.getPublicNotebook(response.userId, "jonathanstichburysnotebook", function(err, response) {			
@@ -47,7 +46,6 @@ exports.index = function(req, res){
 					console.error("Error: " + err);
 				}
 				else {
-					console.log("Here");
 					console.log("Found " + response.totalNotes + " notes");
 				}
 				
@@ -64,16 +62,10 @@ exports.index = function(req, res){
 						var resources = {};
 						for(var resIndex in response.resources) {
 							var resource = response.resources[resIndex];
-							console.log(resource.data.bodyHash);
 							resources[resource.data.bodyHash] = webApiUrlPrefix + 'res/' + resource.guid;
 						}
 						
 						var content = enml.HTMLOfENML(response.content, resources);
-						if(notesProcessed == 4) {
-							console.log(resources);
-							console.log(content);
-						}
-
 						blogContent.push({
 							title: response.title,
 							content: content,
@@ -84,6 +76,7 @@ exports.index = function(req, res){
 						if(notesProcessed == totalNotes) {
 							console.log("Rendering");
 							res.render('index', {title: 'Hello', items: blogContent.sort(function(a, b){
+								//Sort notes in descending order
 								return b.created - a.created;
 							})});
 						}

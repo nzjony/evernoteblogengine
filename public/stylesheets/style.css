@@ -1,6 +1,8 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #efefef;
+  font-family: 'Verdana', sans-serif;
+  font-size: 12px;
+  line-height: 1.7;
+  background-image: url('/images/agsquare.png');
 }
 
 a {
@@ -10,6 +12,7 @@ a {
 div#masthead h1 {
 	color: blue;
 	font-size: 2em;
+	font-family: 'Cabin', sans-serif;
 }
 
 section#posts{
@@ -23,6 +26,10 @@ article {
 	border: 1px solid #dddddd;
 	padding: 5px;
 	margin-top: 40px;
+}
+
+article header h2 {
+	font-family: 'Cabin', serif;
 }
 
 article header p#date{

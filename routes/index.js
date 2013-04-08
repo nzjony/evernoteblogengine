@@ -68,10 +68,12 @@ exports.index = function(req, res){
 							}
 							
 							var content = enml.HTMLOfENML(response.content, resources);
+							var date = new Date(response.created);
 							blogContent.push({
 								title: response.title,
 								content: content,
-								created: response.created
+								created: response.created,
+								date: date.getMonthName() + " " + date.getDate() + ", " + date.getFullYear()
 							});
 
 							//Maybe there is a better way of doing this?

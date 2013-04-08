@@ -2,7 +2,8 @@ extends layout
 
 block content
 	for item in items
-		h1= item.title
-		p Welcome to #{item.title}
-		div
+		article
+			header
+				h2= item.title
+				p#date #{item.date}
 			p !{item.content}

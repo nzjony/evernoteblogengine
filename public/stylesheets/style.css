@@ -1,8 +1,31 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #efefef;
 }
 
 a {
   color: #00B7FF;
+}
+
+div#masthead h1 {
+	color: blue;
+	font-size: 2em;
+}
+
+section#posts{
+	display: block;
+	width: 650px;
+	margin: 0 auto;
+}
+
+article {
+	background-color: white;
+	border: 1px solid #dddddd;
+	padding: 5px;
+	margin-top: 40px;
+}
+
+article header p#date{
+	color: #888;
+	margin-top: -15px;
 }

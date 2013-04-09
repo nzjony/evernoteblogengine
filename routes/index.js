@@ -21,7 +21,8 @@ function buildNoteClientForUser(user) {
  * GET home page.
  */
 
-var blogContent = [];
+//Global, so we can access from post.js (which renders just a single post)
+blogContent = [];
 
 exports.index = function(req, res){
 	var currentBlog = 0;
@@ -73,7 +74,8 @@ exports.index = function(req, res){
 								title: response.title,
 								content: content,
 								created: response.created,
-								date: date.getMonthName() + " " + date.getDate() + ", " + date.getFullYear()
+								date: date.getMonthName() + " " + date.getDate() + ", " + date.getFullYear(),
+								htmlsafetitle: response.title.replace(/ /g, "-")
 							});
 
 							//Maybe there is a better way of doing this?

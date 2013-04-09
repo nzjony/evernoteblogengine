@@ -15,3 +15,16 @@ html
 				|  or my 
 				a(href='http://www.youtube.com/jonotkd', target='_blank') Youtube
 			block content
+		script
+			//The following script is from disqus, it simply adds a link saying the number
+			//of comments and 'reations'
+			/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+			var disqus_shortname = 'jonathansadventures'; // required: replace example with your forum shortname
+
+			/* * * DON'T EDIT BELOW THIS LINE * * */
+			(function () {
+				var s = document.createElement('script'); s.async = true;
+				s.type = 'text/javascript';
+				s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+				(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+			}());

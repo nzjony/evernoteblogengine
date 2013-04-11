@@ -9,7 +9,11 @@ a {
   color: #00B7FF;
 }
 
-div#masthead h1 {
+div#masthead a {
+	text-decoration: none;
+}
+
+div#masthead a h1 {
 	color: blue;
 	font-size: 2em;
 	font-family: 'Cabin', sans-serif;
@@ -28,8 +32,13 @@ article {
 	margin-top: 40px;
 }
 
-article header h2 {
+article header a {
+	text-decoration: none;
+}
+
+article header a h2 {
 	font-family: 'Cabin', serif;
+	color: #009EFF;
 }
 
 article header p#date{

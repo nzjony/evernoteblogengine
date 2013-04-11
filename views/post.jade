@@ -1,0 +1,20 @@
+extends layout
+
+block content
+	script
+		//Discus specific stuff
+		/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+		var disqus_shortname = 'jonathansadventures'; // required: replace example with your forum short name
+		/* * * DON'T EDIT BELOW THIS LINE * * */
+		(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		})();
+	article
+		header
+			a(href='#')
+				h2= item.title
+			p#date #{item.date}
+		p !{item.content}
+		div#disqus_thread

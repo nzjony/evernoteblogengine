@@ -15,8 +15,9 @@ div#masthead a {
 
 div#masthead a h1 {
 	color: blue;
-	font-size: 2em;
+	font-size: 40px;
 	font-family: 'Cabin', sans-serif;
+	margin: 0;
 }
 
 section#posts{

@@ -1,0 +1,4 @@
+kill -9 $(jobs -p)
+node app &
+sleep 1
+curl -s http://localhost:3000/flushcache/9567f13f-c4ea-476f-b5f2-d3d4bd2b005d > /dev/null

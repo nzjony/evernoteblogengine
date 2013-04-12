@@ -8,7 +8,9 @@ var express = require('express')
   , user = require('./routes/user')
   , post = require('./routes/post')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , config = require('./config.js')
+  , evernote = require('./evernote.js');
 
 var app = express();
 
@@ -31,6 +33,17 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/post/:postname', post.post);
+app.get('/flushcache/:guid', function(req, res) {
+	if(req.params.guid == config.flushCacheGUID) {
+		blogContent = [];
+		evernote.getAllPublicNotes(function() {
+			routes.index(req, res);
+		});
+	}
+	else {
+		res.send("Update failed");
+	}
+})
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
@@ -42,3 +55,4 @@ http.createServer(app).listen(app.get('port'), function(){
 Date.prototype.getMonthName = function() {
    return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.getMonth()]; 
 }
+

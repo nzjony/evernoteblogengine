@@ -47,6 +47,10 @@ app.get('/flushcache/:guid', function(req, res) {
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+  //Application has just started, so prefil the cache
+  evernote.getAllPublicNotes(function(){
+    console.log('Preloaded blog posts')
+  });
 });
 
 //Extras

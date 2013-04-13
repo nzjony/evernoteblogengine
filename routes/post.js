@@ -1,3 +1,5 @@
+var config = require('../config.js');
+
 exports.post = function(req, res) {
 	var post = blogContent.filter(function (post) {
 		return post.htmlsafetitle == req.params.postname;
@@ -10,6 +12,9 @@ exports.post = function(req, res) {
 		//the date to it... think about it for now.
 		post = post[0];
 		//Title could be put in a config file... todo
-		res.render('post', {title: 'Jonathan Stichbury\'s Adventures', item: post});
+		res.render('post', {title: 'Jonathan Stichbury\'s Adventures', 
+							gaaccountid: config.googleAnalyticsId,
+							item: post
+						});
 	}	
 };

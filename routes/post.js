@@ -12,7 +12,7 @@ exports.post = function(req, res) {
 		//the date to it... think about it for now.
 		post = post[0];
 		//Title could be put in a config file... todo
-		res.render('post', {title: 'Jonathan Stichbury\'s Adventures', 
+		res.render('post', {title: post.title, 
 							gaaccountid: config.googleAnalyticsId,
 							item: post
 						});

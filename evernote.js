@@ -4,7 +4,8 @@ var thrift = require('thrift'),
     NoteTypes = require('evernode/lib/evernote-thrift/gen-nodejs/NoteStore_types'),
     NoteStore = require('evernode/lib/evernote-thrift/gen-nodejs/NoteStore'),
     http = require('http'),
-    enml = require('enml-js');
+    enml = require('enml-js'),
+    config = require('./config.js');
 
 var evernoteServer = "www.evernote.com";
 var userConnection = customConnections.createHTTPSConnection(evernoteServer, 443, '/edam/user');
@@ -20,11 +21,11 @@ function buildNoteClientForUser(user) {
 blogContent = [];
 
 exports.getAllPublicNotes = function(callback) {
-	userClient.getPublicUserInfo("jonotkd", function(err, response) {
+	userClient.getPublicUserInfo(config.evernoteUsername, function(err, response) {
 		var noteClient = buildNoteClientForUser(response);
 		var webApiUrlPrefix = response.webApiUrlPrefix;	
 		//Pull out my public notebook
-		noteClient.getPublicNotebook(response.userId, "jonathanstichburysnotebook", function(err, response) {			
+		noteClient.getPublicNotebook(response.userId, config.evernotePublicNotebookName, function(err, response) {			
 			//Setup a filter to get the notes from the public notebook
 			var noteFilter = new NoteTypes.NoteFilter();
 			noteFilter.notebookGuid = response.guid;

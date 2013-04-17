@@ -7,10 +7,12 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , post = require('./routes/post')
+  , rss = require('./routes/rss')
   , http = require('http')
   , path = require('path')
   , config = require('./config.js')
   , evernote = require('./evernote.js');
+global.config = config;
 
 var app = express();
 
@@ -44,6 +46,7 @@ app.get('/flushcache/:guid', function(req, res) {
 		res.send("Update failed");
 	}
 })
+app.get('/rss.xml', rss.feed)
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

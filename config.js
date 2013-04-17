@@ -6,4 +6,7 @@ module.exports = {
 	evernoteUsername : 'yourusername',
 	evernotePublicNotebookName : 'yourpublicfoldername',
 	blogTitle : 'your blog title'
+	blogDescription : 'your blog description (used only currently for the rss.xml file)',
+	blogUrl : 'your blog url',
+	blogAuthor : 'your name'
 }
